@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: Encode AZURE_* secrets
         id: encode
-        run: echo -e "EITR_ID='${{ secrets.EITR_ID }}'\nEITR_SECRET='${{ secrets.EITR_SECRET }}'" | base64
+        run: echo -e "EITR_ID='${{ secrets.EITR_ID }}'\nEITR_SECRET='${{ secrets.EITR_SECRET }}'" | base64 >> $GITHUB_OUTPUT
 
   call_central_workflow:
     name: CI
