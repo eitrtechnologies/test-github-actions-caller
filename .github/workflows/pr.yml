@@ -12,7 +12,7 @@ on:
 jobs:
   call_central_workflow:
     name: CI
-    uses: nicholasmhughes/test-github-actions-central/.github/workflows/ci.yml@main
+    uses: eitrtechnologies/test-github-actions-central/.github/workflows/ci.yml@main
     permissions:
       contents: write
       pull-requests: read
