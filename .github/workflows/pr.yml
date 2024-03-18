@@ -14,5 +14,3 @@ jobs:
     name: CI
     uses: eitrtechnologies/test-github-actions-central/.github/workflows/ci.yml@main
     secrets: inherit
-    permissions:
-      pull-requests: read
