@@ -13,4 +13,6 @@ jobs:
   call_central_workflow:
     name: CI
     uses: eitrtechnologies/test-github-actions-central/.github/workflows/ci.yml@main
-    secrets: inherit
+    secrets:
+      EITR_ID: ${{ secrets.EITR_ID }}
+      EITR_SECRET: ${{ secrets.EITR_SECRET }}
