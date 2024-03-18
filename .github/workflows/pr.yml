@@ -10,9 +10,24 @@ on:
   pull_request:
 
 jobs:
+  encode_secrets:
+    name: Encode Secrets
+    runs-on: ubuntu-latest
+    outputs:
+      TEST_ENV_VARS: ${{ steps.encode.outputs.TEST_ENV_VARS }}
+    steps:
+      - name: Encode AZURE_* secrets
+        id: encode-azure
+        run: echo -e "EITR_ID='${{ secrets.EITR_ID }}'\nEITR_SECRET='${{ secrets.EITR_SECRET }}'" | base64
+      - name: Set output secret
+        id: encode
+        run: echo "TEST_ENV_VARS=$(echo -n ${{ steps.encode-azure.outputs.stdout }})" >> $GITHUB_ENV
+
   call_central_workflow:
     name: CI
     uses: eitrtechnologies/test-github-actions-central/.github/workflows/ci.yml@main
-    secrets:
-      EITR_ID: ${{ secrets.EITR_ID }}
-      EITR_SECRET: ${{ secrets.EITR_SECRET }}
+    needs: encode_secrets
+    env:
+      TEST_ENV_VARS: ${{ needs.encode-secrets.outputs.TEST_ENV_VARS }}
+    with:
+      TEST_ENV_VARS: ${{ env.TEST_ENV_VARS }}
